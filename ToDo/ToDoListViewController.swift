@@ -10,7 +10,7 @@ import UIKit
 
 class ToDoListViewController: UITableViewController {
     
-    let itemArray = ["Task 1", "Task 2", "Task 3"]
+    var itemArray = ["Task 1", "Task 2", "Task 3"]
     
 
     override func viewDidLoad() {
@@ -53,6 +53,35 @@ class ToDoListViewController: UITableViewController {
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
+        
+    }
+    
+    //Add new items with the plus button
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        //adds a UIPopUpTab or an alert when the plus button is clicked by the user
+        let alert = UIAlertController(title: "Add New ToDo Item", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add item", style: .default)
+        { (action) in
+            //what happens when person clicks plus button
+            self.itemArray.append(textField.text!) //we unwrap because never gonna be nil since we are ALWAYS placing a string or text inside the textField
+            
+            self.tableView.reloadData()
+            
+        }
+        
+        //a textfield inside a popup Tab
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+        
+        
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
         
     }
     
